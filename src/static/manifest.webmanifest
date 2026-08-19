@@ -1,0 +1,10 @@
+{
+  "name": "SIMBridge 手机端",
+  "short_name": "SIMBridge",
+  "description": "通过 Mac 安全查看、归档和发送短信",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f5f7",
+  "theme_color": "#059669",
+  "lang": "zh-CN"
+}

@@ -1,0 +1,8 @@
+.DS_Store
+.venv/
+.venv-windows/
+build/
+dist/
+dist-windows/
+__pycache__/
+*.py[cod]
