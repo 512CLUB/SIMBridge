@@ -3,6 +3,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 APP_NAME="SIMBridge"
+APP_VERSION="${APP_VERSION:-1.0.0}"
 BUNDLE_ID="${BUNDLE_ID:-com.wangquanrun.simbridge}"
 PYTHON_BIN="${PYTHON_BIN:-python3}"
 VENV_DIR="${VENV_DIR:-$ROOT/.venv}"
@@ -67,4 +68,16 @@ python -m PyInstaller \
   --hidden-import webview.platforms.cocoa \
   "$ROOT/src/launcher.py"
 
-echo "Built: $ROOT/dist/$APP_NAME.app"
+APP_PATH="$ROOT/dist/$APP_NAME.app"
+INFO_PLIST="$APP_PATH/Contents/Info.plist"
+
+/usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $APP_VERSION" "$INFO_PLIST"
+if ! /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $APP_VERSION" "$INFO_PLIST" 2>/dev/null; then
+  /usr/libexec/PlistBuddy -c "Add :CFBundleVersion string $APP_VERSION" "$INFO_PLIST"
+fi
+
+# Updating Info.plist invalidates PyInstaller's bundle signature, so sign the
+# completed app again with an ad-hoc signature for local distribution.
+codesign --force --deep --sign - "$APP_PATH"
+
+echo "Built: $APP_PATH (version $APP_VERSION)"

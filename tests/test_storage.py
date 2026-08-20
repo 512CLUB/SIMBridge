@@ -7,7 +7,7 @@ from pathlib import Path
 SRC = Path(__file__).resolve().parents[1] / "src"
 sys.path.insert(0, str(SRC))
 
-from mobile_access import MobileAccess, is_loopback
+from mobile_access import MobileAccess, is_loopback, trusted_client_address
 from storage import MessageArchive
 
 
@@ -86,6 +86,20 @@ class MobileAccessTests(unittest.TestCase):
         access = MobileAccess("123456", self.account_path)
         self.assertTrue(access.authorized("", "127.0.0.1"))
         self.assertTrue(is_loopback("::1"))
+
+    def test_cloudflare_client_header_is_only_trusted_from_loopback(self):
+        self.assertEqual(
+            trusted_client_address("127.0.0.1", "203.0.113.9"),
+            "203.0.113.9",
+        )
+        self.assertEqual(
+            trusted_client_address("192.168.1.20", "203.0.113.9"),
+            "192.168.1.20",
+        )
+        self.assertEqual(
+            trusted_client_address("127.0.0.1", "not-an-address"),
+            "127.0.0.1",
+        )
 
     def test_remote_client_must_login_then_pair(self):
         access = self.configured_access()

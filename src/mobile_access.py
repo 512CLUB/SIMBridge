@@ -24,6 +24,19 @@ def is_loopback(address):
         return False
 
 
+def trusted_client_address(socket_address, cloudflare_address=""):
+    """Use Cloudflare's client header only when the direct peer is local."""
+    if not is_loopback(socket_address):
+        return socket_address
+    cloudflare_address = str(cloudflare_address or "").strip()
+    if not cloudflare_address:
+        return socket_address
+    try:
+        return str(ipaddress.ip_address(cloudflare_address))
+    except ValueError:
+        return socket_address
+
+
 def local_ipv4_addresses():
     addresses = set()
     try:

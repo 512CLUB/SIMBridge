@@ -1,4 +1,4 @@
-# SIMBridge 当前版本发布说明
+# SIMBridge v1.0.0 macOS 发布说明
 
 ## 安装包
 

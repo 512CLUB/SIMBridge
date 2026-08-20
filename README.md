@@ -78,10 +78,10 @@ AT+CFUN=1,1
 
 当前仅发布 macOS Apple Silicon / arm64 版本：
 
-- [下载 SIMBridge.dmg](https://github.com/512CLUB/SIMBridge/blob/main/release/SIMBridge.dmg)
-- [下载 SIMBridge.app.zip](https://github.com/512CLUB/SIMBridge/blob/main/release/SIMBridge.app.zip)
-- [查看 SHA-256 校验值](https://github.com/512CLUB/SIMBridge/blob/main/release/CHECKSUMS.txt)
-- [打开完整 release 目录](https://github.com/512CLUB/SIMBridge/tree/main/release)
+- [下载 SIMBridge.dmg](https://github.com/512CLUB/SIMBridge/releases/download/v1.0.0/SIMBridge.dmg)
+- [下载 SIMBridge.app.zip](https://github.com/512CLUB/SIMBridge/releases/download/v1.0.0/SIMBridge.app.zip)
+- [查看 SHA-256 校验值](https://github.com/512CLUB/SIMBridge/releases/download/v1.0.0/CHECKSUMS.txt)
+- [查看 v1.0.0 发布说明](https://github.com/512CLUB/SIMBridge/releases/tag/v1.0.0)
 
 仓库目前为私有状态，下载前需要登录具备访问权限的 GitHub 账号。
 
