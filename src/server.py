@@ -19,7 +19,7 @@ import usb.util
 from usb.backend import libusb1
 
 from forwarding import ForwardingService
-from mobile_access import MobileAccess, is_loopback
+from mobile_access import MobileAccess, is_loopback, trusted_client_address
 from storage import ArchiveSyncService, MessageArchive
 
 
@@ -1043,7 +1043,10 @@ class Handler(BaseHTTPRequestHandler):
         self.send_body(*json_bytes(value, status=status))
 
     def client_address_text(self):
-        return self.client_address[0]
+        return trusted_client_address(
+            self.client_address[0],
+            self.headers.get("CF-Connecting-IP", ""),
+        )
 
     def authorized(self):
         return MOBILE_ACCESS.authorized(

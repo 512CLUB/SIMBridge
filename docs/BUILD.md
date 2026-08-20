@@ -36,7 +36,11 @@ http://127.0.0.1:8765/
 ./scripts/build-macos-arm64.sh
 ```
 
-构建脚本会从 `assets/sim_card_icon.png` 生成 macOS 多尺寸 `.icns`，并写入 App Bundle。
+构建脚本会从 `assets/sim_card_icon.png` 生成 macOS 多尺寸 `.icns`，并将默认版本号 `1.0.0` 写入 App Bundle。构建其他版本时可通过 `APP_VERSION` 覆盖：
+
+```bash
+APP_VERSION=1.0.1 ./scripts/build-macos-arm64.sh
+```
 
 打包输出：
 
