@@ -251,7 +251,7 @@ pip install -r requirements.txt
 
 ## 许可证
 
-本项目采用MIT License许可 [SIMBridge Non-Commercial Attribution License 1.0](LICENSE)。
+本项目采用MIT License许可。
 
 允许在非商业目的下使用、复制、学习、修改和重新发布，但必须保留原作者、项目名称和出处。未经版权持有人书面许可，不允许商业使用、付费分发、商业设备捆绑、商业服务集成或用于营利性生产环境。
 
