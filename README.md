@@ -50,10 +50,11 @@ SIMBridge 能识别以下两组常见 USB 标识：
 
 先连接模块，等待模块显示为绿灯后，检查SIMBridge软件是否显示为在线状态。
 如果您需要将模块切换为USB网卡模式，可在软件中“USb 网卡模式中”将模块模式为ECM模式。具体模式可参见下表：
-模式	解释	建议的系统
-QMI	主机拨号并配置地址	Linux、OpenWrt
-ECM	 也就是USB 网卡模式，通用性很强 适配 macOS iPhone 等设备	任何支持 USB 上网的系统（包括手机）
-MBIM	大疆网卡的默认模式	RouterOS v7、Windows、Linux
+| 模式 | 解释 | 建议的系统 |
+| --- | --- | --- |
+| QMI | 主机拨号并配置地址 | Linux、OpenWrt |
+| ECM | 也就是 USB 网卡模式，通用性很强，适配 macOS、iPhone 等设备 | 任何支持 USB 上网的系统（包括手机） |
+| MBIM | 大疆网卡的默认模式 | RouterOS v7、Windows、Linux |
 
 
 
@@ -79,19 +80,8 @@ AT+CFUN=1,1
 
 - [下载 SIMBridge.dmg](https://github.com/512CLUB/SIMBridge/releases/download/v1.0.0/SIMBridge.dmg)
 - [下载 SIMBridge.app.zip](https://github.com/512CLUB/SIMBridge/releases/download/v1.0.0/SIMBridge.app.zip)
-- [查看 SHA-256 校验值](https://github.com/512CLUB/SIMBridge/releases/download/v1.0.0/CHECKSUMS.txt)
 - [查看 v1.0.0 发布说明](https://github.com/512CLUB/SIMBridge/releases/tag/v1.0.0)
 
-仓库目前为私有状态，下载前需要登录具备访问权限的 GitHub 账号。
-
-下载后可以验证文件是否完整：
-
-```bash
-cd ~/Downloads
-shasum -a 256 SIMBridge.dmg
-```
-
-将输出与 `CHECKSUMS.txt` 中 `SIMBridge.dmg` 对应的值比较；完全一致后再安装。
 
 ## 安装与首次启动
 
@@ -101,22 +91,19 @@ shasum -a 256 SIMBridge.dmg
 4. 在“应用程序”中打开 SIMBridge。
 5. 等待几秒，顶部状态显示“在线”后即可使用。
 
-当前版本未使用 Apple Developer ID 签名和公证，首次运行时 macOS 可能提示“无法验证开发者”“Apple 无法检查其是否包含恶意软件”，或直接阻止启动。
-
-推荐处理方法：
-
-1. 在 Finder 的“应用程序”中找到 `SIMBridge.app`。
+首次运行时 macOS 可能提示“无法验证开发者”“Apple 无法检查其是否包含恶意软件”，或直接阻止启动，可按照以下方式处理：
+1. 在访达的“应用程序”中找到 `SIMBridge.app`。
 2. 按住 `Control` 点击应用，选择“打开”。
 3. 在新的确认窗口中再次点击“打开”。
 4. 如果仍被拦截，进入“系统设置 → 隐私与安全性”，在安全提示附近点击“仍要打开”。
 
-如果系统仍提示应用已损坏，并且你确认文件来自本仓库且 SHA-256 校验一致，可以在“终端”执行：
+如果系统仍提示应用已损坏，可以在“终端”执行：
 
 ```bash
 xattr -dr com.apple.quarantine "/Applications/SIMBridge.app"
 ```
 
-然后重新打开应用。不要对来源不明或校验不一致的程序移除隔离属性。
+然后重新打开应用。
 
 ## 使用说明
 
@@ -174,11 +161,7 @@ Mac、4G 模块和 SIMBridge 必须保持运行，手机才可以收发或刷新
 
 ### 开机自启动
 
-将 `SIMBridge.app` 放入“应用程序”文件夹后，可以在右侧开启“开机自启动”。程序会创建当前用户的 LaunchAgent：
-
-```text
-~/Library/LaunchAgents/com.wangquanrun.simbridge.login.plist
-```
+将 `SIMBridge.app` 放入“应用程序”文件夹后，可以在右侧开启“开机自启动”
 
 关闭开关会删除该启动项，不需要管理员权限。
 
@@ -268,11 +251,9 @@ pip install -r requirements.txt
 
 ## 许可证
 
-本项目采用自定义的 [SIMBridge Non-Commercial Attribution License 1.0](LICENSE)。
+本项目采用MIT License许可 [SIMBridge Non-Commercial Attribution License 1.0](LICENSE)。
 
 允许在非商业目的下使用、复制、学习、修改和重新发布，但必须保留原作者、项目名称和出处。未经版权持有人书面许可，不允许商业使用、付费分发、商业设备捆绑、商业服务集成或用于营利性生产环境。
-
-由于包含“禁止商业使用”条款，本许可证不是 OSI 意义上的开源许可证。第三方组件仍分别遵循其自身许可证，详见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
 
 ## 项目结构
 
@@ -293,5 +274,4 @@ pip install -r requirements.txt
 ## 致谢
 
 - [微信公众号参考文章](https://mp.weixin.qq.com/s/7sGT8gFRzTpkVfrZz3FVQQ)
-- Quectel EG25-G / EC25 相关公开技术资料与社区项目
 - 所有提交 Issues、测试硬件和改进建议的用户
