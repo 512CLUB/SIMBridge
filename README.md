@@ -11,52 +11,51 @@
 ## 项目特点
 
 1. **即装即用**：普通用户无需部署服务器、数据库或前端环境。
-2. **Mac 同时作为服务端和客户端**：适合长期运行在 Mac mini 或其他 Mac 上，收到的短信可自动归档，并可在同一 Wi-Fi 下通过手机访问。
+2. **Mac 同时可作为服务端和客户端**：适合长期运行在 Mac mini 或其他 Mac 上，收到的短信可自动存储在Mac上，然后删除 SIM 卡上的短信数据，同时他可以在手机端查看、发送或删除短信。
 3. **本地优先**：短信、号码、备注和配置保存在本机；程序不会主动把数据上传到云端。
-4. **不只收发短信**：支持搜索、收藏、备注、LTE 信号信息、开机自启动和 SMTP 邮件转发。
+4. **短信转发**：支持搜索、收藏、备注、LTE 信号信息、开机自启动和 SMTP 邮件转发。
 
 后续计划适配群晖 NAS、飞牛 NAS 和 Windows，当前仓库暂时只发布 macOS Apple Silicon / arm64 版本。
 
 ## 功能概览
 
-- 查看模块、SIM、运营商、网络制式和短信存储状态。
-- 读取、发送和删除短信，支持全部、收件、已发、未读和收藏筛选。
-- 按号码、短信内容或备注搜索长期归档。
-- 为短信添加备注或收藏标记。
-- 通过 SMTP、STARTTLS 或 SSL/TLS 自动转发新短信。
-- 在开发者模式中查看 LTE 频段、Cell ID、PCI、EARFCN、TAC、RSRP、RSRQ、RSSI、SINR 和原始 PDU。
-- 设置登录后自动启动。
-- 将 Mac 作为局域网短信服务器，供同一 Wi-Fi 下的手机查看或发送短信。
+- 更改模块状态
+- 查看模块、SIM、运营商、网络制式和短信存储状态
+- 读取、发送和删除短信，支持全部、收件、已发、未读和收藏筛选
+- 为短信添加备注或收藏标记
+- 通过 SMTP自动转发新短信到邮箱
+- 在开发者模式中查看连接基站信息
+- 将 Mac 作为短信服务器，供手机查看或发送短信
 
 ## 前期准备
 
 ### 硬件
 
-- 一台 Apple Silicon Mac（M1、M2、M3、M4 或更新的 Apple 芯片）。
-- 大疆第一代 4G 模块，常见型号为 Quectel EG25-G / Baiwang QDC507。
-- 一张已激活、可正常收发短信的 nano-SIM 卡。
-- 一根支持数据传输的 USB-C 线缆。
+- 一台搭载Apple Silicon Mac(M系列芯片)的Mac
+- 大疆第一代4G模块
+- 一根USB-C数据线
 
 ### 系统
 
 - macOS 13 Ventura 或更新版本。
-- 当前发行包仅提供 Apple Silicon / arm64 构建，Intel Mac 尚未发布和验证。
-- 安装包已携带运行所需的 Python、`pyusb`、`pywebview` 和 `libusb`，普通用户无需安装开发环境。
+- 当前发行包仅提供 Apple M 系列芯片 / arm64 构建，Intel Mac 尚未发布和验证。
+- 安装包已携带运行所需的环境，普通用户无需再次安装开发环境。
 
 ## 检查并切换 4G 模块模式
 
 SIMBridge 能识别以下两组常见 USB 标识：
 
-- 大疆 / Baiwang 原始标识：`2ca3:4006`
-- Quectel EC25 标准标识：`2c7c:0125`
+- 大疆模块原始标识：`2ca3:4006`
+- Quectel EC25标准标识：`2c7c:0125`
 
-先连接模块，在“终端”中检查 USB 设备：
+先连接模块，等待模块显示为绿灯后，检查SIMBridge软件是否显示为在线状态。
+如果您需要将模块切换为USB网卡模式，可在软件中“USb 网卡模式中”将模块模式为ECM模式。具体模式可参见下表：
+模式	解释	建议的系统
+QMI	主机拨号并配置地址	Linux、OpenWrt
+ECM	 也就是USB 网卡模式，通用性很强 适配 macOS iPhone 等设备	任何支持 USB 上网的系统（包括手机）
+MBIM	大疆网卡的默认模式	RouterOS v7、Windows、Linux
 
-```bash
-system_profiler SPUSBDataType | grep -A 8 -E "BAIWANG|DJI|Quectel|2ca3|2c7c"
-```
 
-如果 SIMBridge 已经显示模块在线，不需要修改模式、VID/PID 或固件。
 
 SIMBridge 需要模块处于可访问 AT 管理接口的短信/管理模式。如果模块此前被切换成 USB 网卡模式，且 SIMBridge 无法识别，可按照[参考文章](https://mp.weixin.qq.com/s/7sGT8gFRzTpkVfrZz3FVQQ)准备兼容的 AT 工具，然后依次发送：
 
